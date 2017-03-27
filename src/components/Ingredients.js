@@ -10,7 +10,7 @@ const Ingredients = (props) => {
             <ul className="list-group">
                 {ingredients}
             </ul>
-            <button className='btn btn-info'>Edit</button>
+            <button className='btn btn-info' onClick={() => props.edit()}>Edit</button>
             <button className="btn btn-danger">Delete</button>
             </div>
         );

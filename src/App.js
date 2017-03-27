@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Ingredients from './components/Ingredients'
+import Ingredients from './components/Ingredients';
+import EditRecipe from './components/Edit';
 
 class App extends Component {
 
@@ -30,7 +31,7 @@ class App extends Component {
       ],
       showIngredients: false,
       choseRecipe: {},
-      edit: false
+      editing: false
     }
   }
 
@@ -59,6 +60,26 @@ findRecipe = (e) => {
     }
   }
 
+  edit = () => {
+    this.setState({
+      editing: true
+    });
+  }
+
+  add = () => {
+    const arr = this.state.chosenRecipe;
+    arr.ingredients.push([]);
+    this.setState({
+      chosenRecipe: arr
+    });
+  }
+
+  cancel = () => {
+    this.setState({
+      editing: false
+    })
+  }
+
 
 
   render() {
@@ -71,7 +92,9 @@ findRecipe = (e) => {
                 {this.renderRecipeNames()}
               </div>
 
-              {!this.state.edit ? <Ingredients recipe={this.state.chosenRecipe}></Ingredients> : <div></div>}  
+              {!this.state.editing ? 
+              <Ingredients recipe={this.state.chosenRecipe} edit={this.edit}/> : 
+              <EditRecipe recipe={this.state.chosenRecipe} add={this.add} cancel={this.cancel}/>}  
 
             </div>
           </div>
