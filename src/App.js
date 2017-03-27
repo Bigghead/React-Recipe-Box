@@ -23,7 +23,6 @@ class App extends Component {
   }
   
 componentWillMount(){
-  console.log(window.localStorage);
   localStorage.setItem('recipe', JSON.stringify(
     [
         {
@@ -46,7 +45,6 @@ componentWillMount(){
       ]
   ));
   const recipes = JSON.parse(localStorage.getItem('recipe'));
-  console.log(recipes);
   this.setState({
     recipes
   });
@@ -56,7 +54,8 @@ findRecipe = (e) => {
   this.state.recipes.forEach(recipe => {
     if(recipe.name === e){
       this.setState({
-        chosenRecipe: recipe,
+        //make a copy, that don't point to the same recipe object
+        chosenRecipe: JSON.parse(JSON.stringify(recipe)),
         copyRecipe: JSON.parse(JSON.stringify(recipe))
       });
     }
@@ -96,6 +95,23 @@ findRecipe = (e) => {
       chosenRecipe: this.state.copyRecipe
     });
   }
+
+  deleteOneIng = (ing) => {
+    console.log(ing);
+    const arr = JSON.parse(JSON.stringify(this.state.chosenRecipe));
+    arr.ingredients.splice(arr.ingredients.indexOf(ing), 1);
+    this.setState({
+      chosenRecipe: arr
+    });
+    console.log(this.state.chosenRecipe);
+  }
+
+  save = () => {
+    localStorage.setItem('recipe', JSON.stringify(this.state.recipes));
+    this.setState({
+      editing : false
+    })
+  }
   
 
 
@@ -109,12 +125,15 @@ findRecipe = (e) => {
               <div className="jumbotron">
                 {this.renderRecipeNames()}
               </div>
-              <button className=" btn-danger" onClick={() => {this.setState({ adding: true})}}>Add A New Recipe</button>
+              <button className=" btn-danger" onClick={() => { this.save()}}>Add A New Recipe</button>
               
 
               {!this.state.editing ? 
               <Ingredients recipe={this.state.chosenRecipe} edit={this.edit}/> : 
-              <EditRecipe recipe={this.state.chosenRecipe} add={this.add} cancel={this.cancel}/>}  
+              <EditRecipe recipe={this.state.chosenRecipe} 
+                add={this.add} 
+                cancel={this.cancel}
+                deleteOne={this.deleteOneIng}/>}  
 
             </div>
           </div>
