@@ -1,8 +1,23 @@
 .jumbotron{
   background-color: lightblue;
+  width: 70%;
+  margin: 50px auto 10px auto;
 }
 
 form{
   margin: auto;
   width: 70%;
+}
+
+ul{
+  margin: 50px auto;
+  width: 70%;
+}
+
+.well{
+  margin: 0;
+}
+
+a:hover{
+  cursor: pointer;
 }

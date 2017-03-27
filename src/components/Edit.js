@@ -3,9 +3,9 @@ import '../App.css';
 
 
 const EditRecipe = (props) => {
-     if (props.recipe) {
-         const ingredients = props.recipe.ingredients.map(ing => {
-             return  <input key={ing} type="text" className="form-control" defaultValue={ing}/>
+     if (props.recipe.ingredients) {
+         const ingredients = props.recipe.ingredients.map((ing, index) => {
+             return  <input key={index} type="text" className="form-control" defaultValue={ing} required/>
          });
         return (
             <div className='text-center'>
@@ -14,13 +14,18 @@ const EditRecipe = (props) => {
                        {ingredients}
                     </div>
                 </form>
-                <button className="btn" onClick={() => props.add()}>Edit</button>
+                <button className="btn" onClick={() => props.add()}>Add</button>
                 <button className="btn" onClick={() => props.cancel()}>Cancel</button>
 
             </div>
         );
     } else {
-        return <div>Fail</div>
+        return (
+            <div className='text-center'>
+                Fail
+
+            </div>
+        );
     }
 
 };
