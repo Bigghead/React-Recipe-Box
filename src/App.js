@@ -12,6 +12,20 @@ class App extends Component {
 
     this.state = {
       recipes: [
+        
+      ],
+      showIngredients: false,
+      chosenRecipe: {},
+      copyRecipe: {},
+      editing: false,
+      adding: false
+    }
+  }
+  
+componentWillMount(){
+  console.log(window.localStorage);
+  localStorage.setItem('recipe', JSON.stringify(
+    [
         {
           name: 'Pumpkin Pie',
           ingredients: [
@@ -29,14 +43,14 @@ class App extends Component {
             'Powdered Donuts'
           ]
         }
-      ],
-      showIngredients: false,
-      chosenRecipe: {},
-      copyRecipe: {},
-      editing: false,
-      adding: false
-    }
-  }
+      ]
+  ));
+  const recipes = JSON.parse(localStorage.getItem('recipe'));
+  console.log(recipes);
+  this.setState({
+    recipes
+  });
+}
 
 findRecipe = (e) => {
   this.state.recipes.forEach(recipe => {
