@@ -51,7 +51,8 @@ componentWillMount(){
 }
 
 findRecipe = (e) => {
-  this.state.recipes.forEach(recipe => {
+  const recipes = JSON.parse(localStorage.getItem('recipe'));
+  recipes.forEach(recipe => {
     if(recipe.name === e){
       this.setState({
         //make a copy, that don't point to the same recipe object
@@ -97,20 +98,39 @@ findRecipe = (e) => {
   }
 
   deleteOneIng = (ing) => {
-    console.log(ing);
     const arr = JSON.parse(JSON.stringify(this.state.chosenRecipe));
     arr.ingredients.splice(arr.ingredients.indexOf(ing), 1);
     this.setState({
       chosenRecipe: arr
     });
-    console.log(this.state.chosenRecipe);
   }
 
   save = () => {
-    localStorage.setItem('recipe', JSON.stringify(this.state.recipes));
-    this.setState({
-      editing : false
-    })
+    console.log(this.state.recipes[0]);
+    const newObj = JSON.parse(JSON.stringify(this.state.recipes));
+    newObj.forEach(ing => {
+      
+      //find which recipe element we're updating
+      if(ing.name === this.state.chosenRecipe.name){
+        
+        //change that element with the current updated chosenRecipe
+        newObj[newObj.indexOf(ing)] = this.state.chosenRecipe;
+      }
+    });
+    console.log(newObj[0]);
+   
+        this.setState({
+          recipes: newObj,
+          editing : false,
+
+        }, () => {
+          console.log(this.state.recipes);
+          localStorage.setItem('recipe', JSON.stringify(this.state.recipes));
+
+        });
+    //console.log(this.state.recipes);
+    //console.log(JSON.parse(localStorage.getItem('recipe')));
+   
   }
   
 

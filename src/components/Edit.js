@@ -8,7 +8,7 @@ const EditRecipe = (props) => {
         const ingredients = props.recipe.ingredients.map((ing, index) => {
 
             return (
-                <div key={ing} className='input-group'>
+                <div key={ing + index} className='input-group'>
                     <input   type="text" className="form-control " defaultValue={ing} required  />
                      <span className="input-group-btn ">
                         <button className="btn-sm btn-danger" type="button" onClick={ () => props.deleteOne(ing)} >Delete!</button>
