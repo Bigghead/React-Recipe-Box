@@ -2,9 +2,10 @@ import React from 'react';
 import '../App.css'
 
 const Ingredients = (props) => {
+    console.log(props.recipe.ingredients);
     if (props.recipe.ingredients) {
         const ingredients = props.recipe.ingredients.map((ing, index) =>{
-            return <li key={index} className='list-group-item'>{ing} 
+            return <li key={ing + index} className='list-group-item'>{ing} 
                     </li>
         });
         return (
@@ -17,7 +18,7 @@ const Ingredients = (props) => {
             </div>
         );
     } else {
-        return <ul></ul>;
+        return null;
     }
 
 };

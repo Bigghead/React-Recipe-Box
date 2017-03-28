@@ -23,6 +23,7 @@ class App extends Component {
   }
   
 componentWillMount(){
+  if(!localStorage.getItem('recipe')){
   localStorage.setItem('recipe', JSON.stringify(
     [
         {
@@ -44,6 +45,8 @@ componentWillMount(){
         }
       ]
   ));
+
+  }
   const recipes = JSON.parse(localStorage.getItem('recipe'));
   this.setState({
     recipes
@@ -93,7 +96,7 @@ findRecipe = (e) => {
   cancel = () => {
     this.setState({
       editing: false,
-      chosenRecipe: this.state.copyRecipe
+      chosenRecipe: JSON.parse(JSON.stringify(this.state.copyRecipe))
     });
   }
 
@@ -105,8 +108,7 @@ findRecipe = (e) => {
     });
   }
 
-  save = () => {
-    console.log(this.state.recipes[0]);
+  save = (formData) => {
     const newObj = JSON.parse(JSON.stringify(this.state.recipes));
     newObj.forEach(ing => {
       
@@ -114,23 +116,20 @@ findRecipe = (e) => {
       if(ing.name === this.state.chosenRecipe.name){
         
         //change that element with the current updated chosenRecipe
-        newObj[newObj.indexOf(ing)] = this.state.chosenRecipe;
+        newObj[newObj.indexOf(ing)].ingredients = formData;
       }
     });
-    console.log(newObj[0]);
    
         this.setState({
           recipes: newObj,
           editing : false,
+          chosenRecipe: JSON.parse(JSON.stringify(newObj))
 
         }, () => {
           console.log(this.state.recipes);
           localStorage.setItem('recipe', JSON.stringify(this.state.recipes));
 
         });
-    //console.log(this.state.recipes);
-    //console.log(JSON.parse(localStorage.getItem('recipe')));
-   
   }
   
 
@@ -153,7 +152,8 @@ findRecipe = (e) => {
               <EditRecipe recipe={this.state.chosenRecipe} 
                 add={this.add} 
                 cancel={this.cancel}
-                deleteOne={this.deleteOneIng}/>}  
+                deleteOne={this.deleteOneIng}
+                save={this.save}/>}  
 
             </div>
           </div>
