@@ -3,11 +3,12 @@ import '../App.css'
 
 const Ingredients = (props) => {
     console.log(props.recipe.ingredients);
+    let ingredients; 
     if (props.recipe.ingredients) {
-        const ingredients = props.recipe.ingredients.map((ing, index) =>{
+        ingredients = props.recipe.ingredients.map((ing, index) =>{
             return <li key={ing + index} className='list-group-item'>{ing} 
                     </li>
-        });
+        }); 
         return (
             <div>
             <ul className="list-group">
@@ -17,10 +18,10 @@ const Ingredients = (props) => {
             <button className="btn btn-danger">Delete</button>
             </div>
         );
+   
     } else {
-        return null;
+        return  null;
     }
-
 };
 
 export default Ingredients;

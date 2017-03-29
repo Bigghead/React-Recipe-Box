@@ -72,12 +72,7 @@ class EditRecipe extends Component {
                 </div>
             );
         } else {
-            return (
-                <div className='text-center'>
-                    Fail
-
-            </div>
-            );
+            return null;
         }
     }
 

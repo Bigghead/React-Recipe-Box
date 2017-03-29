@@ -117,19 +117,17 @@ findRecipe = (e) => {
         
         //change that element with the current updated chosenRecipe
         newObj[newObj.indexOf(ing)].ingredients = formData;
-      }
-    });
-   
         this.setState({
+          chosenRecipe : JSON.parse(JSON.stringify(newObj[newObj.indexOf(ing)])),
           recipes: newObj,
-          editing : false,
-          chosenRecipe: JSON.parse(JSON.stringify(newObj))
-
+          editing : false
         }, () => {
-          console.log(this.state.recipes);
+          console.log(this.state.chosenRecipe);
           localStorage.setItem('recipe', JSON.stringify(this.state.recipes));
 
         });
+      }
+    });
   }
   
 
