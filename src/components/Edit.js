@@ -57,7 +57,7 @@ class EditRecipe extends Component {
                                 <button className="btn-lg btn-danger" onClick={() => this.props.cancel()}>Cancel</button>
                             </div>
 
-                            <div className='col-cs-6'>
+                            <div className='col-xs-6'>
                                 <button type='submit' className="btn-lg btn-danger " >Save Recipe</button>
 
                             </div>

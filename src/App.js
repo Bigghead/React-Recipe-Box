@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+
+//========COMPONENTS=======
 import Ingredients from './components/Ingredients';
 import EditRecipe from './components/Edit';
-import AddNew from './components/AddNew'
+import AddNew from './components/AddNew';
+import AddRecipe from './components/AddRecipe';
 
 class App extends Component {
 
@@ -59,7 +62,8 @@ findRecipe = (e) => {
     if(recipe.name === e){
       this.setState({
         //make a copy, that don't point to the same recipe object
-        chosenRecipe: JSON.parse(JSON.stringify(recipe)),
+        //chosenRecipe: JSON.parse(JSON.stringify(recipe)),
+        chosenRecipe : Object.assign({}, recipe),
         copyRecipe: JSON.parse(JSON.stringify(recipe))
       });
     }
@@ -79,6 +83,26 @@ findRecipe = (e) => {
     }
   }
 
+  addRecipe = () =>{
+    if(this.state.adding && !this.state.editing){
+      return <AddRecipe add={this.add}></AddRecipe>;
+    } else {
+      return null;
+    }
+  }
+
+  saveRecipe = (recipeObj) =>{
+    const newRecipe = JSON.parse(JSON.stringify(this.state.recipes));
+    newRecipe.push(recipeObj);
+    console.log(newRecipe);
+    this.setState({
+      recipes : JSON.parse(JSON.stringify(newRecipe))
+    }, () => {
+      console.log(this.state);
+      localStorage.setItem('recipe', this.state.recipes);
+    });
+  }
+
   edit = () => {
     this.setState({
       editing: true
@@ -90,7 +114,7 @@ findRecipe = (e) => {
     arr.ingredients.push('');
     this.setState({
       chosenRecipe: arr
-    });
+    }, () => console.log(this.state.copyRecipe));
   }
 
   cancel = () => {
@@ -142,8 +166,10 @@ findRecipe = (e) => {
               <div className="jumbotron">
                 {this.renderRecipeNames()}
               </div>
-              <button className=" btn-danger" onClick={() => { this.save()}}>Add A New Recipe</button>
+              <button className=" btn-danger" onClick={() => { this.setState({ adding : true }) }}>Add A New Recipe</button>
               
+              <button className="btn-danger" onClick={ () => this.saveRecipe({name: 'hello', ingredients: ['hi', 'again']})}>Trying out save new</button>
+              { this.addRecipe() }
 
               {!this.state.editing ? 
               <Ingredients recipe={this.state.chosenRecipe} edit={this.edit}/> : 
