@@ -23,6 +23,14 @@ class AddRecipe extends Component {
         });
     }
 
+    deleteOne = (ing) => {
+        const newArr = JSON.parse(JSON.stringify(this.state.ingredients));
+        newArr.splice(newArr.indexOf(ing), 1);
+        this.setState({
+            ingredients : newArr
+        })
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         const newIng = {
@@ -50,7 +58,7 @@ class AddRecipe extends Component {
                 <div className='input-group'>
                     <input type="text" className="form-control " required />
                     <span className="input-group-btn ">
-                        <button className="btn-sm btn-danger" type="button" onClick={() => this.props.deleteOne()} >Delete!</button>
+                        <button className="btn-sm btn-danger" type="button"  >New!</button>
                     </span>
                 </div>
             );
@@ -60,7 +68,7 @@ class AddRecipe extends Component {
                     <div className='input-group' key={index}>
                         <input type="text" className="form-control " required ref={ing + index} />
                         <span className="input-group-btn ">
-                            <button className="btn-sm btn-danger" type="button" onClick={() => this.props.deleteOne()} >Delete!</button>
+                            <button className="btn-sm btn-danger" type="button" onClick={() => this.deleteOne(ing)} >Delete!</button>
                         </span>
                     </div>
                 );
@@ -82,7 +90,7 @@ class AddRecipe extends Component {
                     <div className="row">
                         <div className='col-sm-6 '>
                             <button className="btn-lg btn-info" onClick={() => this.addLine()}>Add A New Ingredient</button>
-                            <button className="btn-lg btn-danger" >Cancel</button>
+                            <button className="btn-lg btn-danger" onClick={ () => this.props.cancelAdd() }>Cancel</button>
                         </div>
 
                         <div className='col-sm-6'>

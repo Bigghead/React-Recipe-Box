@@ -61,6 +61,7 @@ class App extends Component {
     recipes.forEach(recipe => {
       if (recipe.name === e) {
         this.setState({
+          adding: false,
           //make a copy, that don't point to the same recipe object
           //chosenRecipe: JSON.parse(JSON.stringify(recipe)),
           chosenRecipe: Object.assign({}, recipe),
@@ -72,9 +73,9 @@ class App extends Component {
 
   renderRecipeNames = () => {
     if (this.state.recipes) {
-      return this.state.recipes.map(recipe => {
+      return this.state.recipes.map((recipe, index) => {
         return (
-          <div className="well" key={recipe.name} >
+          <div className="well" key={recipe.name + index} >
             <a onClick={() => { this.findRecipe(recipe.name) }}>{recipe.name}</a>
           </div>
 
@@ -83,11 +84,25 @@ class App extends Component {
     }
   }
 
+  currentlyAdding = () =>{
+    this.setState({
+      adding: true
+    });
+  }
+
+  cancelCurrentlyAdding = () => {
+    this.setState({
+      adding: false
+    });
+  }
+
+
   addRecipe = () => {
     if (this.state.adding && !this.state.editing) {
       return <AddRecipe
         add={this.add}
         saveRecipe={this.saveRecipe}
+        cancelAdd={this.cancelCurrentlyAdding}
       ></AddRecipe>;
     } else {
       return null;
@@ -169,11 +184,13 @@ class App extends Component {
               <div className="jumbotron">
                 {this.renderRecipeNames()}
               </div>
-              <button className=" btn-danger" onClick={() => { this.setState({ adding: true }) }}>Add A New Recipe</button>
+              <button className=" btn-danger" onClick={() => { this.currentlyAdding() } }>Add A New Recipe</button>
 
               {this.addRecipe()}
 
               {!this.state.editing ?
+
+                this.state.adding ?  null : 
                 <Ingredients recipe={this.state.chosenRecipe} edit={this.edit} /> :
                 <EditRecipe recipe={this.state.chosenRecipe}
                   add={this.add}
