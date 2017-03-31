@@ -7,7 +7,7 @@ class AddRecipe extends Component {
         this.state = {
 
 
-            title: '',
+            name: '',
             ingredients: []
 
         }
@@ -19,23 +19,28 @@ class AddRecipe extends Component {
 
         newArr.push('');
         this.setState({
-            newRecipe: newArr
+            ingredients: newArr
         });
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const newIng = [];
+        const newIng = {
+            name: '',
+            ingredients: []
+        };
         for (var key in this.refs) {
-            if (key !== 'title') {
-                newIng.push(this.refs[key].value);
+            console.log(key);
+            if(key === 'title'){
+                newIng.name = this.refs[key].value;
+            } else {
+                newIng.ingredients.push(this.refs[key].value);
+                console.log(newIng.ingredients);
             }
         }
-        this.setState({
-                title: this.refs.title
-        }, () => {
-            console.log(this.state.newRecipe);
-        })
+
+        this.props.saveRecipe(newIng);
+        
         console.log(newIng);
     }
 
@@ -75,12 +80,12 @@ class AddRecipe extends Component {
 
 
                     <div className="row">
-                        <div className='col-xs-6 pull-left'>
+                        <div className='col-sm-6 '>
                             <button className="btn-lg btn-info" onClick={() => this.addLine()}>Add A New Ingredient</button>
                             <button className="btn-lg btn-danger" >Cancel</button>
                         </div>
 
-                        <div className='col-xs-6'>
+                        <div className='col-sm-6'>
                             <button type='submit' className="btn-lg btn-danger " >Save Recipe</button>
 
                         </div>

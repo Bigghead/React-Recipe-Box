@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css'
 
 const Ingredients = (props) => {
-    console.log(props.recipe.ingredients);
+    //console.log(props.recipe.ingredients);
     let ingredients; 
     if (props.recipe.ingredients) {
         ingredients = props.recipe.ingredients.map((ing, index) =>{

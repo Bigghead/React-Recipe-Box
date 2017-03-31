@@ -52,7 +52,7 @@ class EditRecipe extends Component {
 
 
                         <div className="row">
-                            <div className='col-xs-6 pull-left'>
+                            <div className='col-xs-6'>
                                 <button className="btn-lg btn-info" onClick={() => this.props.add()}>Add A New Ingredient</button>
                                 <button className="btn-lg btn-danger" onClick={() => this.props.cancel()}>Cancel</button>
                             </div>

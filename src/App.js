@@ -15,7 +15,7 @@ class App extends Component {
 
     this.state = {
       recipes: [
-        
+
       ],
       showIngredients: false,
       chosenRecipe: {},
@@ -24,58 +24,58 @@ class App extends Component {
       adding: false
     }
   }
-  
-componentWillMount(){
-  if(!localStorage.getItem('recipe')){
-  localStorage.setItem('recipe', JSON.stringify(
-    [
-        {
-          name: 'Pumpkin Pie',
-          ingredients: [
-            'Pumpkin Puree',
-            'Sugar',
-            'Powdered Donuts'
-          ]
-        },
-        {
-          name: 'Spaghetti',
-          ingredients: [
-            'Spaghetti',
-            'Marinara Sauce',
-            'Sugar',
-            'Powdered Donuts'
-          ]
-        }
-      ]
-  ));
 
-  }
-  const recipes = JSON.parse(localStorage.getItem('recipe'));
-  this.setState({
-    recipes
-  });
-}
+  componentWillMount() {
+    if (!localStorage.getItem('recipe')) {
+      localStorage.setItem('recipe', JSON.stringify(
+        [
+          {
+            name: 'Pumpkin Pie',
+            ingredients: [
+              'Pumpkin Puree',
+              'Sugar',
+              'Powdered Donuts'
+            ]
+          },
+          {
+            name: 'Spaghetti',
+            ingredients: [
+              'Spaghetti',
+              'Marinara Sauce',
+              'Sugar',
+              'Powdered Donuts'
+            ]
+          }
+        ]
+      ));
 
-findRecipe = (e) => {
-  const recipes = JSON.parse(localStorage.getItem('recipe'));
-  recipes.forEach(recipe => {
-    if(recipe.name === e){
-      this.setState({
-        //make a copy, that don't point to the same recipe object
-        //chosenRecipe: JSON.parse(JSON.stringify(recipe)),
-        chosenRecipe : Object.assign({}, recipe),
-        copyRecipe: JSON.parse(JSON.stringify(recipe))
-      });
     }
-  });
-}
-  
+    const recipes = JSON.parse(localStorage.getItem('recipe'));
+    this.setState({
+      recipes
+    });
+  }
+
+  findRecipe = (e) => {
+    const recipes = JSON.parse(localStorage.getItem('recipe'));
+    recipes.forEach(recipe => {
+      if (recipe.name === e) {
+        this.setState({
+          //make a copy, that don't point to the same recipe object
+          //chosenRecipe: JSON.parse(JSON.stringify(recipe)),
+          chosenRecipe: Object.assign({}, recipe),
+          copyRecipe: JSON.parse(JSON.stringify(recipe))
+        });
+      }
+    });
+  }
+
   renderRecipeNames = () => {
     if (this.state.recipes) {
       return this.state.recipes.map(recipe => {
         return (
           <div className="well" key={recipe.name} >
-            <a onClick={ () => {this.findRecipe(recipe.name)}}>{recipe.name}</a>
+            <a onClick={() => { this.findRecipe(recipe.name) }}>{recipe.name}</a>
           </div>
 
         );
@@ -83,23 +83,26 @@ findRecipe = (e) => {
     }
   }
 
-  addRecipe = () =>{
-    if(this.state.adding && !this.state.editing){
-      return <AddRecipe add={this.add}></AddRecipe>;
+  addRecipe = () => {
+    if (this.state.adding && !this.state.editing) {
+      return <AddRecipe
+        add={this.add}
+        saveRecipe={this.saveRecipe}
+      ></AddRecipe>;
     } else {
       return null;
     }
   }
 
-  saveRecipe = (recipeObj) =>{
+  saveRecipe = (recipeObj) => {
     const newRecipe = JSON.parse(JSON.stringify(this.state.recipes));
     newRecipe.push(recipeObj);
     console.log(newRecipe);
     this.setState({
-      recipes : JSON.parse(JSON.stringify(newRecipe))
+      recipes: JSON.parse(JSON.stringify(newRecipe))
     }, () => {
       console.log(this.state);
-      localStorage.setItem('recipe', this.state.recipes);
+      localStorage.setItem('recipe', JSON.stringify(this.state.recipes));
     });
   }
 
@@ -135,16 +138,16 @@ findRecipe = (e) => {
   save = (formData) => {
     const newObj = JSON.parse(JSON.stringify(this.state.recipes));
     newObj.forEach(ing => {
-      
+
       //find which recipe element we're updating
-      if(ing.name === this.state.chosenRecipe.name){
-        
+      if (ing.name === this.state.chosenRecipe.name) {
+
         //change that element with the current updated chosenRecipe
         newObj[newObj.indexOf(ing)].ingredients = formData;
         this.setState({
-          chosenRecipe : JSON.parse(JSON.stringify(newObj[newObj.indexOf(ing)])),
+          chosenRecipe: JSON.parse(JSON.stringify(newObj[newObj.indexOf(ing)])),
           recipes: newObj,
-          editing : false
+          editing: false
         }, () => {
           console.log(this.state.chosenRecipe);
           localStorage.setItem('recipe', JSON.stringify(this.state.recipes));
@@ -153,7 +156,7 @@ findRecipe = (e) => {
       }
     });
   }
-  
+
 
 
 
@@ -166,18 +169,17 @@ findRecipe = (e) => {
               <div className="jumbotron">
                 {this.renderRecipeNames()}
               </div>
-              <button className=" btn-danger" onClick={() => { this.setState({ adding : true }) }}>Add A New Recipe</button>
-              
-              <button className="btn-danger" onClick={ () => this.saveRecipe({name: 'hello', ingredients: ['hi', 'again']})}>Trying out save new</button>
-              { this.addRecipe() }
+              <button className=" btn-danger" onClick={() => { this.setState({ adding: true }) }}>Add A New Recipe</button>
 
-              {!this.state.editing ? 
-              <Ingredients recipe={this.state.chosenRecipe} edit={this.edit}/> : 
-              <EditRecipe recipe={this.state.chosenRecipe} 
-                add={this.add} 
-                cancel={this.cancel}
-                deleteOne={this.deleteOneIng}
-                save={this.save}/>}  
+              {this.addRecipe()}
+
+              {!this.state.editing ?
+                <Ingredients recipe={this.state.chosenRecipe} edit={this.edit} /> :
+                <EditRecipe recipe={this.state.chosenRecipe}
+                  add={this.add}
+                  cancel={this.cancel}
+                  deleteOne={this.deleteOneIng}
+                  save={this.save} />}
 
             </div>
           </div>
