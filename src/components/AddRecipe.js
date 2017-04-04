@@ -15,7 +15,6 @@ class AddRecipe extends Component {
 
     addLine = () => {
         const newArr = JSON.parse(JSON.stringify(this.state.ingredients));
-        //console.log(newArr);
 
         newArr.push('');
         this.setState({
@@ -37,6 +36,7 @@ class AddRecipe extends Component {
             name: '',
             ingredients: []
         };
+        console.log(this.refs);
         for (var key in this.refs) {
             console.log(key);
             if(key === 'title'){
@@ -48,6 +48,7 @@ class AddRecipe extends Component {
         }
 
         this.props.saveRecipe(newIng);
+        this.props.cancelAdd();
         
         console.log(newIng);
     }
@@ -56,7 +57,7 @@ class AddRecipe extends Component {
         if (this.state.ingredients.length === 0) {
             return (
                 <div className='input-group'>
-                    <input type="text" className="form-control " required />
+                    <input type="text" className="form-control " ref='ing'required />
                     <span className="input-group-btn ">
                         <button className="btn-sm btn-danger" type="button"  >New!</button>
                     </span>

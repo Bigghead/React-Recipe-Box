@@ -110,13 +110,20 @@ class App extends Component {
   }
 
   saveRecipe = (recipeObj) => {
+    let sameRecipe = false;
+    this.state.recipes.forEach(recipe => {
+      if(recipe.name === recipeObj.name){
+        sameRecipe = true;
+      }
+    });
+    if(sameRecipe){
+      return ;
+    }
     const newRecipe = JSON.parse(JSON.stringify(this.state.recipes));
     newRecipe.push(recipeObj);
-    console.log(newRecipe);
     this.setState({
       recipes: JSON.parse(JSON.stringify(newRecipe))
     }, () => {
-      console.log(this.state);
       localStorage.setItem('recipe', JSON.stringify(this.state.recipes));
     });
   }
@@ -132,7 +139,7 @@ class App extends Component {
     arr.ingredients.push('');
     this.setState({
       chosenRecipe: arr
-    }, () => console.log(this.state.copyRecipe));
+    });
   }
 
   cancel = () => {
@@ -164,7 +171,6 @@ class App extends Component {
           recipes: newObj,
           editing: false
         }, () => {
-          console.log(this.state.chosenRecipe);
           localStorage.setItem('recipe', JSON.stringify(this.state.recipes));
 
         });
