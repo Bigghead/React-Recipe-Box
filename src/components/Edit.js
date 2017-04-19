@@ -33,18 +33,26 @@ class EditRecipe extends Component {
             const ingredients = this.props.recipe.ingredients.map((ing, index) => {
 
                 return (
-                    <div key={ing + index} className='input-group'>
-                        <input type="text" name={ing + index} className="form-control " defaultValue={ing} required ref={ing + ' hi' + index} />
-                        <span className="input-group-btn ">
-                            <button className="btn-sm btn-danger" type="button" onClick={() => this.props.deleteOne(ing)} >Delete!</button>
-                        </span>
+                    <div key={ing + index} className='input-group '>
+                        <div className="row">
+                            <div className="col s9 ">
+                                <input  type="text" name={ing + index} className="form-control center-align " defaultValue={ing} required ref={ing + ' hi' + index} />
+                            </div>
+
+                            <div className="col s3">
+                                <button className="btn waves-effect waves-light red" type="button" onClick={() => this.props.deleteOne(ing)} >Delete!</button>
+
+                            </div>
+                        </div>
+
+
 
                     </div>
                 );
 
             });
             return (
-                <div className='text-center edit-box'>
+                <div className='center-align edit-box'>
                     <form onSubmit={this.handleSubmit.bind(this)}>
                         <div className="form-group">
                             {ingredients}
@@ -53,12 +61,12 @@ class EditRecipe extends Component {
 
                         <div className="row">
                             <div className='col-xs-6'>
-                                <button className="btn-lg btn-info" onClick={() => this.props.add()}>Add A New Ingredient</button>
-                                <button className="btn-lg btn-danger" onClick={() => this.props.cancel()}>Cancel</button>
+                                <button className="waves-effect waves-light btn lightblue" onClick={() => this.props.add()}>Add A New Ingredient</button>
+                                <button className="waves-effect waves-light btn red" onClick={() => this.props.cancel()}>Cancel</button>
                             </div>
 
                             <div className='col-xs-6'>
-                                <button type='submit' className="btn-lg btn-danger " >Save Recipe</button>
+                                <button type='submit' className="waves-effect waves-light btn red " >Save Recipe</button>
 
                             </div>
 

@@ -4,26 +4,21 @@
   margin: 50px auto 10px auto;
 }
 
-form{
-  margin: auto;
+
+
+.ingredient-list{
+  margin-top: 25px;
 }
 
-ul{
-  margin: 50px auto;
-  width: 70%;
-}
 
-.well{
-  margin: 0;
-}
 
 a:hover{
   cursor: pointer;
 }
 
 .edit-box{
-  width: 70%;
-  margin: auto;
+  width: 85%;
+  margin: 30px auto ;
 }
 
 .btn{

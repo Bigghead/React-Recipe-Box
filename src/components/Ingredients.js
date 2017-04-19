@@ -6,12 +6,12 @@ const Ingredients = (props) => {
     let ingredients; 
     if (props.recipe.ingredients) {
         ingredients = props.recipe.ingredients.map((ing, index) =>{
-            return <li key={ing + index} className='list-group-item'>{ing} 
+            return <li key={ing + index} className='collection-item'>{ing} 
                     </li>
         }); 
         return (
-            <div>
-            <ul className="list-group">
+            <div className='ingredient-list'>
+            <ul className="collection">
                 {ingredients}
             </ul>
             <button className='btn btn-info' onClick={() => props.edit()}>Edit</button>

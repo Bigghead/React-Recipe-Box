@@ -75,8 +75,11 @@ class App extends Component {
     if (this.state.recipes) {
       return this.state.recipes.map((recipe, index) => {
         return (
-          <div className="well" key={recipe.name + index} >
-            <a onClick={() => { this.findRecipe(recipe.name) }}>{recipe.name}</a>
+          <div className="card blue-grey darken-1 center-align" key={recipe.name + index}>
+            <div className="card-content white-text"  >
+              <a className='card-title' onClick={() => { this.findRecipe(recipe.name) }}>{recipe.name}</a>
+            </div>
+
           </div>
 
         );
@@ -84,7 +87,7 @@ class App extends Component {
     }
   }
 
-  currentlyAdding = () =>{
+  currentlyAdding = () => {
     this.setState({
       adding: true
     });
@@ -112,12 +115,12 @@ class App extends Component {
   saveRecipe = (recipeObj) => {
     let sameRecipe = false;
     this.state.recipes.forEach(recipe => {
-      if(recipe.name === recipeObj.name){
+      if (recipe.name === recipeObj.name) {
         sameRecipe = true;
       }
     });
-    if(sameRecipe){
-      return ;
+    if (sameRecipe) {
+      return;
     }
     const newRecipe = JSON.parse(JSON.stringify(this.state.recipes));
     newRecipe.push(recipeObj);
@@ -184,20 +187,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="container-fluid">
+        <div className="container center-align">
           <div className="row">
-            <div className="col-xs-12 text-center">
-              <div className="jumbotron">
+            <div className="col s12 text-center">
+              <div className="">
                 {this.renderRecipeNames()}
               </div>
-              <button className=" btn-danger" onClick={() => { this.currentlyAdding() } }>Add A New Recipe</button>
+              <button className=" waves-effect waves-light btn" onClick={() => { this.currentlyAdding() }}>Add A New Recipe</button>
 
               {this.addRecipe()}
 
               {!this.state.editing ?
 
-                this.state.adding ?  null : 
-                <Ingredients recipe={this.state.chosenRecipe} edit={this.edit} /> :
+                this.state.adding ? null :
+                  <Ingredients recipe={this.state.chosenRecipe} edit={this.edit} /> :
                 <EditRecipe recipe={this.state.chosenRecipe}
                   add={this.add}
                   cancel={this.cancel}
